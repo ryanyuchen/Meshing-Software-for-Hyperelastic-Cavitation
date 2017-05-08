@@ -1,0 +1,58 @@
+*HEADING
+*NODE, NSET=ALLNODES, input=testnd.txt
+*ELEMENT, TYPE=C3D8, ELSET=ALL, input=testel.txt
+*Nset, nset=Load
+14676
+*Nset, nset=Inner1
+1
+*Nset, nset=Inner2
+511
+*Nset, nset=Inner3
+481
+*Elset, Elset=XZ
+13486
+*Elset, Elset=XY
+13065
+*Elset, Elset=YZ
+13050
+*Solid Section, elset=ALL, material=material1
+*Material, name=Material1
+*Hyperelastic, neo hooke
+0.5, 2
+*boundary
+Surf-In-1,1,1
+Surf-In-2,2,2
+Surf-In-3,3,3
+*EQUATION
+2
+Surf-Out-1,1,1,Load,1,-1
+2
+Surf-Out-2,2,1,Load,2,-1
+2
+Surf-Out-3,3,1,Load,3,-1
+*RESTART,WRITE, frequency=0
+**step1
+*STEP, Name=step1, NLGEOM=YES, inc=10000000000
+*STATIC
+0.00001,1,0.000001,0.01
+*boundary
+Load,1,1,10
+Load,2,2,10
+Load,3,3,10
+*Output, field, variable=PRESELECT, frequency=1
+*Element Output, Elset=XZ, Position=CENTROIDAL
+S
+*Element Output, Elset=XY, Position=CENTROIDAL
+S
+*Element Output, Elset=YZ, Position=CENTROIDAL
+S
+*Output, history, variable=PRESELECT, frequency=1
+*Node Output, nset=Load
+COOR1,COOR2,COOR3
+*Node Output, nset=Inner1
+COOR1,COOR2,COOR3
+*Node Output, nset=Inner2
+COOR1,COOR2,COOR3
+*Node Output, nset=Inner3
+COOR1,COOR2,COOR3
+*END STEP
